@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#305252">
+    <title>Spendly</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <main class="login" id="login" hidden>
+        <div class="login-box">
+            <h1>Spendly</h1>
+            <p class="grey">Sign in to save your expenses and use the AI assistant.</p>
+
+            <div id="google-button"></div>
+
+            <p class="message" id="message"></p>
+        </div>
+    </main>
+
+            
+
+    <div class="app" id="app" hidden>
+        <div class="main">
+            <h1 class="title">Spendly</h1>
+
+            <header class="month-bar" id="month-bar">
+                <div class="months">
+                    <button class="icon-btn" id="prev">‹</button>
+                    <span class="month" id="month">Month Year</span>
+                    <button class="icon-btn" id="next">›</button>
+                </div>
+                <div class="totals">
+                    <p class="total">Budget <span id="budget">Not set</span></p>
+                    <p class="total">Spent <span id="spent">0</span></p>
+                    <p class="total">Left <span id="left">-</span></p>
+                </div>
+            </header>
+
+            <div class="screens" id="screens">
+                <section class="screen" id="records">
+                    <div class="card">
+                        <div class="budget-top">
+                            <h2>Monthly budget</h2>
+                            <button class="link" id="set-budget">Set budget</button>
+                        </div>
+                        <p class="grey" id="budget-text">No budget set for this month yet.</p>
+                        <div class="budget-bar">
+                            <div class="budget-fill" id="budget-fill"></div>
+                        </div>
+                    </div>
+                    <div id="list"></div>
+                    <p class="empty-text" id="records-empty" hidden>No expenses this month. Tap + to add your first one.</p>
+                </section>
+
+                <section class="screen" id="chart" hidden>
+                    <div class="card chart-card" id="chart-card">
+                        <div class="donut" id="donut">
+                            <div class="donut-center">
+                                <strong id="donut-total">0</strong>
+                                <small>spent</small>
+                            </div>
+                        </div>
+                        <ul class="legend" id="legend"></ul>
+                    </div>
+                    <div class="card" id="top-card">
+                        <h2>Top categories</h2>
+                        <ul class="top-list" id="top-list"></ul>
+                    </div>
+                    <p class="empty-text" id="chart-empty" hidden>Nothing to show for this month yet.</p>
+                </section>
+
+                                <section class="screen" id="assistant" hidden>
+                    <div class="card">
+                        <h2>AI Assistant</h2>
+                        <div class="messages" id="messages">
+                            <p class="bubble bot">Hi, I can answer questions about your spending and suggest a budget for next month. Try asking where you spent the most.</p>
+                        </div>
+                    </div>
+                    <form class="chat" id="chat-form">
+                        <input type="text" id="chat-input" placeholder="Ask about your spending...">
+                        <button class="btn primary">Send</button>
+                    </form>
+                </section>
+
+                <section class="screen" id="me" hidden>
+                    <div class="card profile">
+                        <div class="avatar" id="avatar">G</div>
+                        <div>
+                            <h2 id="name">Guest</h2>
+                            <p class="grey" id="email">Using the app as a guest</p>
+                        </div>
+                    </div>
+                    <button class="btn secondary" id="logout">Log out</button>
+                </section>
+            </div>
+        </div>
+
+        <nav class="sidebar">
+            <button class="tab active" data-screen="records">
+                <span class="icon">📒</span>
+                <span>Records</span>
+            </button>
+            <button class="tab" data-screen="chart">
+                <span class="icon">📊</span>
+                <span>Chart</span>
+            </button>
+            <button class="add-btn" id="add">+</button>
+            <button class="tab" data-screen="assistant">
+                <span class="icon">🤖</span>
+                <span>Assistant</span>
+            </button>
+            <button class="tab" data-screen="me">
+                <span class="icon">👤</span>
+                <span>Me</span>
+            </button>
+        </nav>
+    </div>
+
+    <dialog class="popup" id="popup">
+        <form id="form">
+            <div class="popup-top">
+                <h2 id="popup-title">Add expense</h2>
+                <button type="button" class="icon-btn" id="close">×</button>
+            </div>
+
+            <label class="field">
+                <span>Amount</span>
+                <input type="text" id="amount" inputmode="decimal" placeholder="0.00" required>
+            </label>
+
+            <div class="categories">
+                <p>Category</p>
+
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="category" value="Food">
+                        <span><span class="emoji">🍔</span>Food</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Transport">
+                        <span><span class="emoji">🚌</span>Transport</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Shopping">
+                        <span><span class="emoji">🛍️</span>Shopping</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Bills">
+                        <span><span class="emoji">🧾</span>Bills</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Entertainment">
+                        <span><span class="emoji">🎬</span>Fun</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Health">
+                        <span><span class="emoji">💊</span>Health</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Education">
+                        <span><span class="emoji">📚</span>Study</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="category" value="Other">
+                        <span><span class="emoji">✨</span>Other</span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="field">
+                <span>Date</span>
+                <input type="date" id="date" required>
+            </label>
+
+            <label class="field">
+                <span>Note (optional)</span>
+                <input type="text" id="note" placeholder="e.g. Lunch">
+            </label>
+
+            <p class="message" id="popup-message"></p>
+
+            <div class="popup-buttons">
+                <button type="button" class="btn danger" id="delete" hidden>Delete</button>
+                <button class="btn primary">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="popup" id="budget-popup">
+        <form id="budget-form">
+            <div class="popup-top">
+                <h2 id="budget-title">Budget</h2>
+                <button type="button" class="icon-btn" id="budget-close">×</button>
+            </div>
+
+            <label class="field">
+                <span>How much do you want to spend this month</span>
+                <input type="text" id="budget-amount" inputmode="decimal" placeholder="0.00" required>
+            </label>
+
+            <div class="popup-buttons">
+                <button type="button" class="btn danger" id="budget-remove" hidden>Remove</button>
+                <button class="btn primary">Save</button>
+            </div>
+        </form>
+    </dialog>
+</body>
+</html>
