@@ -1,5 +1,9 @@
 # Spendly
 
+Live demo: https://spendly-af7n.onrender.com
+
+The app is on a free plan, so the first visit after a quiet period can take about a minute to wake up. Google sign in is in testing mode, so only approved test users can sign in.
+
 Spendly is a full stack expense tracker. You sign in with Google, add your expenses, set a budget for each month, see where your money went in charts, and ask an AI assistant questions about your spending.
 
 ## Features
@@ -58,7 +62,7 @@ spendly
 
 ## Notes
 
-- The app runs locally and is not hosted yet.
+- - The app is hosted on Render, with the database on MongoDB Atlas.
 - Google sign in is in testing mode, so only approved test users can sign in.
 - The AI assistant uses the free Gemini plan, which has usage limits.
 
